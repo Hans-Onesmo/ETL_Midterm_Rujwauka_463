@@ -3,38 +3,76 @@
 # ETL Pipeline for Sales Order Data
 
 ## Project Overview
-This project implements a complete **ETL (Extract, Transform, Load)** pipeline designed to process and manage sales order data efficiently. The pipeline is built using Python and enables robust data cleaning, enrichment, and loading into both **SQLite** and **Parquet** formats for flexible downstream use.
+This project implements a full ETL (Extract, Transform, Load) pipeline to process sales order data from CSV files. The pipeline:
+
+1. Extracts raw and incremental datasets
+2. Transforms the data through cleaning, enrichment, and formatting
+3. Loads the final datasets into both a SQLite database and Parquet files for downstream usage
 
 ---
 
-## ETL Workflow
+## ETL Phases
 
 ### 1. Extract
-- Reads input files: `raw_data.csv` and `incremental_data.csv`
-- Performs initial data inspection
-- Notes data quality issues (e.g., missing or inconsistent values)
+- **Files loaded**:
+  - `raw_data.csv`: Contains historical sales data
+  - `incremental_data.csv`: Contains newly added records
+  - Enables full and incremental data processing for up-to-date analytics.
+  - Initial inspection of data (e.g., structure, column types)
+  - Documentation of data quality issues
+
+---
 
 ### 2. Transform
-- Cleans and standardizes data:
-  - Fills missing values
-  - Removes duplicate entries
-  - Converts data types (e.g., strings to datetime, floats to integers)
-- Enriches data with:
-  - Calculated fields (`total_price`, `order_month`, `order_year`)
-  - Categorization fields (e.g., future option: `price_tier`)
-  
+
+#### Missing Values
+-  Replace nulls in critical fields
+-  Prevent errors during processing and ensure consistent results
+  - Text fields like `customer_name` and `region`: fill with `"Unknown"` or `"Unspecified"`
+  - Numeric fields like `quantity` and `unit_price`: fill with column median
+  - Dates: fill with placeholder `"1900-01-01"`
+
+#### Duplicate Removal
+-  Drop duplicate rows based on `order_id`
+-  Ensure each order is uniquely processed
+
+#### Enrichment
+  - Calculate `total_price = quantity × unit_price`
+  - Extract `order_month` and `order_year` from `order_date`
+-  Adds analytical value for monthly/yearly reporting and sales metrics
+
+#### Data Type Conversion
+-  Ensure `quantity` and `order_id` are integers; convert `order_date` to datetime
+-  Guarantee schema consistency for storage and querying
+
+#### Price Tier Categorization (optional)
+-  Add a column classifying `total_price` into tiers (e.g., Low, Medium, High)
+-  Enables segmentation for pricing strategies or marketing analysis
+
+---
+
 ### 3. Load
-- Saves the processed dataset in:
-  - Parquet files (`transformed/` and `loaded/` directories)
-- Validates saved files with sample output previews
+
+#### Output Formats
+- Parquet Files:
+  - `transformed/transformed_full.parquet`
+  - `transformed/transformed_incremental.parquet`
+
+#### Verification
+- Load and print sample data from final outputs to verify integrity
 
 ---
 
-## Tech Stack
-
+## Tools & Technologies
 - Python 3
-- pandas: data manipulation
-- numpy: numerical operations
-- pyarrow: Parquet file operations
+- Pandas – data manipulation
+- PyArrow – efficient columnar storage (Parquet format)
+- Jupyter Notebooks – interactive ETL step execution
 
 ---
+
+## Screenshots (Optional)
+Include:
+- Before and after snapshots of cleaned data
+- Histogram or bar charts for price distribution or sales over months
+- Schema of the SQLite database
