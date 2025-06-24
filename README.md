@@ -70,9 +70,3 @@ This project implements a full ETL (Extract, Transform, Load) pipeline to proces
 - Jupyter Notebooks – interactive ETL step execution
 
 ---
-
-## Screenshots (Optional)
-Include:
-- Before and after snapshots of cleaned data
-- Histogram or bar charts for price distribution or sales over months
-- Schema of the SQLite database
