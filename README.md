@@ -70,3 +70,7 @@ This project implements a full ETL (Extract, Transform, Load) pipeline to proces
 - Jupyter Notebooks – interactive ETL step execution
 
 ---
+![image](https://github.com/user-attachments/assets/27bd39d1-bd65-41e4-b21f-d9914d82efd2)
+![image](https://github.com/user-attachments/assets/2926d447-fbbd-47bd-a175-a723bd6d72b1)
+![image](https://github.com/user-attachments/assets/d56c78ad-a604-480d-b8c2-7833bc5c4049)
+
